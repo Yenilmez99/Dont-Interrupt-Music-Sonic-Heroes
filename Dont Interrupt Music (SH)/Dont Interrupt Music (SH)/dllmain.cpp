@@ -41,9 +41,8 @@ DWORD GetPointerAddress(HWND hwnd, DWORD gameBaseAddr, DWORD address, std::vecto
 DWORD WINAPI MainCore(HMODULE hModule) {
 
     HWND hwnd_SonicHeroesTM = FindWindowA(NULL, "SONIC HEROES(TM)");
-    while (hwnd_SonicHeroesTM == NULL) {
+    while (hwnd_SonicHeroesTM == NULL)
         hwnd_SonicHeroesTM = FindWindowA(NULL, "SONIC HEROES(TM)");
-    }
     DWORD ProcessIDSonicHeroes = NULL;
     GetWindowThreadProcessId(hwnd_SonicHeroesTM, &ProcessIDSonicHeroes);
     HANDLE HandleSonicHeroes = OpenProcess(PROCESS_ALL_ACCESS, FALSE, ProcessIDSonicHeroes);
@@ -51,7 +50,32 @@ DWORD WINAPI MainCore(HMODULE hModule) {
     DWORD SonicHeroesMainAdress = GetModuleBaseAddress(_T(SonicHeroesGameModule), ProcessIDSonicHeroes);
 
     bool StageOpen = 0;
+    uint8_t SelectedTeam = 0;
     uint8_t MusicEdit = 0;
+
+    std::ifstream File("Y99 Mods Config File.txt");
+    std::string TeamName;
+    std::string Line;
+    int LineNum = 0;
+    uint8_t ReadCharacterConfig[4] = { 1,1,0,0 };
+    if (!File.is_open());
+
+    while (getline(File, Line)) {
+        LineNum++;
+        if (LineNum >= 10 && LineNum <= 13) {
+            size_t pos = Line.find(": ");
+            if (pos != std::string::npos) {
+                TeamName = Line.substr(0, pos);
+                ReadCharacterConfig[LineNum - 10] = std::stoi(Line.substr(pos + 2));
+
+            }
+        }
+    }
+    for (short j = 0; j < 3; j++) {
+        if (ReadCharacterConfig[j] != 0 && ReadCharacterConfig[j] != 1)
+            ReadCharacterConfig[j] = 1;
+    }
+    File.close();
 
     DWORD MusicEditMainAdress = 0x006778A0;
     std::vector<DWORD> MusicEditOffset{ 0x18,0x29 };
@@ -61,7 +85,8 @@ DWORD WINAPI MainCore(HMODULE hModule) {
         MusicEditAdress = GetPointerAddress(hwnd_SonicHeroesTM, SonicHeroesMainAdress, MusicEditMainAdress, MusicEditOffset);
         ReadProcessMemory(HandleSonicHeroes, (PBYTE*)MusicEditAdress, &MusicEdit, sizeof(uint8_t), 0);
         ReadProcessMemory(HandleSonicHeroes, (PBYTE*)0x007C6BD4, &StageOpen, sizeof(bool), 0);
-        if (StageOpen == 0 && MusicEdit == 0x06) {
+        ReadProcessMemory(HandleSonicHeroes, (PBYTE*)0x008D6920, &SelectedTeam, sizeof(uint8_t), 0);
+        if (!StageOpen && MusicEdit == 0x06 && ReadCharacterConfig[SelectedTeam]) {
             MusicEdit = 0x2;
             WriteProcessMemory(HandleSonicHeroes, (PBYTE*)MusicEditAdress, &MusicEdit, sizeof(uint8_t), 0);
         }
