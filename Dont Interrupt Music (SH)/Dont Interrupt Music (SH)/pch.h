@@ -9,6 +9,9 @@
 #include <math.h>
 #include <string>
 #include <fstream>
+#include <iostream>
+
 #include "framework.h"
+#include "json.hpp"
 
 #endif

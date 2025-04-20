@@ -1,0 +1,14 @@
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\sonicheroes.musicedit.dontinterruptmusicsh\ModConfig.json
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\sonicheroes.musicedit.dontinterruptmusicsh\Dont Interrupt Music Config.deps.json
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\sonicheroes.musicedit.dontinterruptmusicsh\Dont Interrupt Music Config.dll
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\sonicheroes.musicedit.dontinterruptmusicsh\Dont Interrupt Music Config.pdb
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.csproj.AssemblyReference.cache
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.AssemblyInfoInputs.cache
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.AssemblyInfo.cs
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.csproj.CoreCompileInputs.cache
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Int.564F3CD0.Up2Date
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.dll
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\refint\Dont Interrupt Music Config.dll
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\Dont Interrupt Music Config.pdb
+D:\Projeler\Visual Studio Projeler\Dont Interrupt Music (SH)\Dont Interrupt Music Config\obj\Release\ref\Dont Interrupt Music Config.dll

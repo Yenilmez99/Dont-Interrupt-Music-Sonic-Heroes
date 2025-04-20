@@ -38,6 +38,23 @@ DWORD GetPointerAddress(HWND hwnd, DWORD gameBaseAddr, DWORD address, std::vecto
     return pointeraddress += offsets.at(offsets.size() - 1);
 }
 
+std::string GetDllPath(std::string DLLName) {
+    HMODULE hModule = NULL;
+    char path[MAX_PATH];
+    std::string DLLPath = "";
+    LPCSTR DLLNameLPCSTR = DLLName.c_str();
+
+    GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_PIN, DLLNameLPCSTR, &hModule);
+    GetModuleFileNameA(hModule, path, MAX_PATH);
+    DLLPath = path;
+
+    if (DLLPath.find_last_of("\\/") != std::string::npos)
+        DLLPath = DLLPath.substr(0, DLLPath.find_last_of("\\/"));
+
+    return DLLPath;
+}
+
+
 DWORD WINAPI MainCore(HMODULE hModule) {
 
     HWND hwnd_SonicHeroesTM = FindWindowA(NULL, "SONIC HEROES(TM)");
@@ -52,28 +69,54 @@ DWORD WINAPI MainCore(HMODULE hModule) {
     bool StageOpen = 0;
     uint8_t SelectedTeam = 0;
     uint8_t MusicEdit = 0;
+    UINT8 SelectedStage = 0;
 
-    std::ifstream File("Y99 Mods Config File.txt");
-    std::string TeamName;
-    std::string Line;
-    int LineNum = 0;
-    uint8_t ReadCharacterConfig[4] = { 1,1,0,0 };
-    if (!File.is_open());
+    std::ifstream File(GetDllPath("Dont Interrupt Music (SH).dll") + "\\..\\..\\User\\Mods\\sonicheroes.musicedit.dontinterruptmusicsh\\Config.json");
+    nlohmann::json ConfigData;
+    File >> ConfigData;
 
-    while (getline(File, Line)) {
-        LineNum++;
-        if (LineNum >= 10 && LineNum <= 13) {
-            size_t pos = Line.find(": ");
-            if (pos != std::string::npos) {
-                TeamName = Line.substr(0, pos);
-                ReadCharacterConfig[LineNum - 10] = std::stoi(Line.substr(pos + 2));
+    bool ReadCharacterConfig[4] = { 1,1,0,0 };
+    bool ReadStageConfig[23];
 
-            }
-        }
+    for (short u = 0; u < 23; u++) {
+        if (u == 10 || u == 11)
+            ReadStageConfig[u] = 0;
+        else
+            ReadStageConfig[u] = 1;
     }
-    for (short j = 0; j < 3; j++) {
-        if (ReadCharacterConfig[j] != 0 && ReadCharacterConfig[j] != 1)
-            ReadCharacterConfig[j] = 1;
+
+    if (!File.is_open()) {
+        std::cout << "Proje acilamadi";
+    }
+    else {
+        ReadCharacterConfig[0] = ConfigData["TeamSonic"];
+        ReadCharacterConfig[1] = ConfigData["TeamDark"];
+        ReadCharacterConfig[2] = ConfigData["TeamRose"];
+        ReadCharacterConfig[3] = ConfigData["TeamChaotix"];
+
+        ReadStageConfig[0] = ConfigData["SeasideHill"];
+        ReadStageConfig[1] = ConfigData["OceanPlace"];
+        ReadStageConfig[2] = ConfigData["GrandMetropolis"];
+        ReadStageConfig[3] = ConfigData["PowerPlant"];
+        ReadStageConfig[4] = ConfigData["CasinoPark"];
+        ReadStageConfig[5] = ConfigData["BingoHighway"];
+        ReadStageConfig[6] = ConfigData["RailCanyon"];
+        ReadStageConfig[7] = ConfigData["BulletStation"];
+        ReadStageConfig[8] = ConfigData["FrogForest"];
+        ReadStageConfig[9] = ConfigData["LostJungle"];
+        ReadStageConfig[10] = ConfigData["HangCastle"];
+        ReadStageConfig[11] = ConfigData["MysticMansion"];
+        ReadStageConfig[12] = ConfigData["EggFleet"];
+        ReadStageConfig[13] = ConfigData["FinalFortress"];
+        ReadStageConfig[14] = ConfigData["EGGHAWK"];
+        ReadStageConfig[15] = ConfigData["TEAMVS1"];
+        ReadStageConfig[16] = ConfigData["ROBOTCARNIVAL"];
+        ReadStageConfig[17] = ConfigData["EGGALBATROS"];
+        ReadStageConfig[18] = ConfigData["TEAMVS2"];
+        ReadStageConfig[19] = ConfigData["ROBOTSTORM"];
+        ReadStageConfig[20] = ConfigData["EGGEMPEROR"];
+        ReadStageConfig[21] = ConfigData["METALMADNESS"];
+        ReadStageConfig[22] = ConfigData["METALSONIC"];
     }
     File.close();
 
@@ -86,7 +129,10 @@ DWORD WINAPI MainCore(HMODULE hModule) {
         ReadProcessMemory(HandleSonicHeroes, (PBYTE*)MusicEditAdress, &MusicEdit, sizeof(uint8_t), 0);
         ReadProcessMemory(HandleSonicHeroes, (PBYTE*)0x007C6BD4, &StageOpen, sizeof(bool), 0);
         ReadProcessMemory(HandleSonicHeroes, (PBYTE*)0x008D6920, &SelectedTeam, sizeof(uint8_t), 0);
-        if (!StageOpen && MusicEdit == 0x06 && ReadCharacterConfig[SelectedTeam]) {
+        ReadProcessMemory(HandleSonicHeroes, (PBYTE*)0x008D6720, &SelectedStage, sizeof(uint8_t), 0);
+        if (SelectedStage <= 1 || SelectedStage >= 25)
+            SelectedStage = 11;
+        if (!StageOpen && (MusicEdit == 0x06) && ReadCharacterConfig[SelectedTeam] && ReadStageConfig[SelectedStage - 2]) {
             MusicEdit = 0x2;
             WriteProcessMemory(HandleSonicHeroes, (PBYTE*)MusicEditAdress, &MusicEdit, sizeof(uint8_t), 0);
         }

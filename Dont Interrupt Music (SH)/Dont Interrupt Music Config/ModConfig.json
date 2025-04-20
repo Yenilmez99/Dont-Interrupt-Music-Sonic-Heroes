@@ -1,0 +1,33 @@
+{
+  "ModId": "sonicheroes.musicedit.dontinterruptmusicsh",
+  "ModName": "Dont Interrupt Music",
+  "ModAuthor": "Yenilmez99",
+  "ModVersion": "1.2.0",
+  "ModDescription": "Using TeamBlast Will No Longer Interrupt Stage Music!",
+  "ModDll": "Dont Interrupt Music Config.dll",
+  "ModIcon": "",
+  "ModR2RManagedDll32": "x86/Dont Interrupt Music Config.dll",
+  "ModR2RManagedDll64": "x64/Dont Interrupt Music Config.dll",
+  "ModNativeDll32": "Dont Interrupt Music (SH).dll",
+  "ModNativeDll64": "",
+  "Tags": [],
+  "CanUnload": null,
+  "HasExports": null,
+  "IsLibrary": false,
+  "ReleaseMetadataFileName": "Dont_Interrupt_Music_Config.ReleaseMetadata.json",
+  "PluginData": {
+    "GameBanana": {
+      "ItemType": "Mod",
+      "ItemId": 578853
+    }
+  },
+  "IsUniversalMod": false,
+  "ModDependencies": [
+    "reloaded.sharedlib.hooks"
+  ],
+  "OptionalDependencies": [],
+  "SupportedAppId": [
+    "tsonic_win.exe"
+  ],
+  "ProjectUrl": ""
+}

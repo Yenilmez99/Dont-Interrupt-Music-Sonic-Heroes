@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "jTM4aqhoh/g=",
+  "success": true,
+  "projectFilePath": "D:\\Projeler\\Visual Studio Projeler\\Dont Interrupt Music (SH)\\Dont Interrupt Music Config\\Dont Interrupt Music Config.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yenil\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.8\\microsoft.net.illink.tasks.8.0.8.nupkg.sha512",
+    "C:\\Users\\yenil\\.nuget\\packages\\reloaded.hooks.definitions\\1.11.0\\reloaded.hooks.definitions.1.11.0.nupkg.sha512",
+    "C:\\Users\\yenil\\.nuget\\packages\\reloaded.mod.interfaces\\2.4.0\\reloaded.mod.interfaces.2.4.0.nupkg.sha512",
+    "C:\\Users\\yenil\\.nuget\\packages\\reloaded.sharedlib.hooks\\1.9.0\\reloaded.sharedlib.hooks.1.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}
